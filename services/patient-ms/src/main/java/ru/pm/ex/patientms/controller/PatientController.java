@@ -8,6 +8,7 @@ import ru.pm.ex.patientms.dto.PatientDto;
 import ru.pm.ex.patientms.mapper.PatientMapper;
 import ru.pm.ex.patientms.service.PatientService;
 import ru.pm.ex.patientms.validation.OnCreate;
+import ru.pm.ex.patientms.validation.OnUpdate;
 
 import java.net.URI;
 import java.util.List;
@@ -33,11 +34,19 @@ public class PatientController {
         return ResponseEntity.ok().body(patientMapper.toDto(patient));
     }
 
-
     @PostMapping
-    public ResponseEntity<PatientDto> createPatient(@RequestBody @Validated(OnCreate.class) PatientDto patientRequestDto) {
-        var patient = patientMapper.toEntity(patientRequestDto);
+    public ResponseEntity<PatientDto> createPatient(@RequestBody @Validated(OnCreate.class) PatientDto patientDto) {
+        var patient = patientMapper.toEntity(patientDto);
         patient = patientService.create(patient);
+        return ResponseEntity
+                .created(URI.create("/patients/" + patient.getPatientId()))
+                .body(patientMapper.toDto(patient));
+    }
+
+    @PutMapping("/{patientId}")
+    public ResponseEntity<PatientDto> updatePatient(@PathVariable("patientId") UUID patientId, @RequestBody @Validated(OnUpdate.class) PatientDto patientDto) {
+        var patient = patientMapper.toEntity(patientDto);
+        patient = patientService.update(patientId, patient);
         return ResponseEntity
                 .created(URI.create("/patients/" + patient.getPatientId()))
                 .body(patientMapper.toDto(patient));
