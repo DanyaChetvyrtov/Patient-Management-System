@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: config-ms
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/DanyaChetvyrtov/Patient-Management-System.git
+          search-paths: configurations/{application}
+
+server:
+  port: 8888
