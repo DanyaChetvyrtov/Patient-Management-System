@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-bd-container
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+    networks:
+      - bd-network
+    volumes:
+      - postgres-bd:/data/postgres
+      - ../scripts/db-initializer.sh:/usr/local/bin/db-initializer.sh
+    restart: unless-stopped
+
+volumes:
+  postgres-bd:
+
+networks:
+  bd-network:
+    driver: bridge
