@@ -1,0 +1,19 @@
+@path=http://localhost:4000/patients
+
+### GET get patients
+GET {{ path }}
+
+### GET get patient by ID
+GET {{ path }}/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+
+
+### POST create new patient
+POST {{ path }}
+Content-Type: application/json
+
+{
+  "name": "Семёнов Данил Олегович",
+  "email": "danissimo2@example.com",
+  "address": "ул. Ленина, д. 21, кв. 5",
+  "dateOfBirth": "2001-05-15"
+}
