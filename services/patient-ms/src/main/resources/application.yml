@@ -1,3 +1,12 @@
 spring:
   application:
     name: patient-ms
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/DanyaChetvyrtov/TaskManager.git
+          search-paths: configurations/{application}
+
+server:
+  port: 8888
