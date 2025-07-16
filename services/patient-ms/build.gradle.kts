@@ -41,6 +41,9 @@ dependencies {
 	// db
 	runtimeOnly("org.postgresql:postgresql")
 
+	// docs
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
+
 	// lombok
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

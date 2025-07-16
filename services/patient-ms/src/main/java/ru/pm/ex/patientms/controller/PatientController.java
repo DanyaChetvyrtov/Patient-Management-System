@@ -1,5 +1,7 @@
 package ru.pm.ex.patientms.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,12 +18,14 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/patients")
+@Tag(name = "Patient", description = "API for managing patients")
 @RequiredArgsConstructor
 public class PatientController {
     private final PatientService patientService;
     private final PatientMapper patientMapper;
 
     @GetMapping
+    @Operation(summary = "Get Patients")
     public ResponseEntity<List<PatientDto>> getPatients() {
         var patientDTOs = patientService.getPatients()
                 .stream().map(patientMapper::toDto).toList();
@@ -29,12 +33,14 @@ public class PatientController {
     }
 
     @GetMapping("/{patientId}")
+    @Operation(summary = "Get Patient by id")
     public ResponseEntity<PatientDto> getPatient(@PathVariable UUID patientId) {
         var patient = patientService.getPatient(patientId);
         return ResponseEntity.ok().body(patientMapper.toDto(patient));
     }
 
     @PostMapping
+    @Operation(summary = "Create Patient")
     public ResponseEntity<PatientDto> createPatient(@RequestBody @Validated(OnCreate.class) PatientDto patientDto) {
         var patient = patientMapper.toEntity(patientDto);
         patient = patientService.create(patient);
@@ -44,6 +50,7 @@ public class PatientController {
     }
 
     @PutMapping("/{patientId}")
+    @Operation(summary = "Update Patient")
     public ResponseEntity<PatientDto> updatePatient(@PathVariable("patientId") UUID patientId, @RequestBody @Validated(OnUpdate.class) PatientDto patientDto) {
         var patient = patientMapper.toEntity(patientDto);
         patient = patientService.update(patientId, patient);
@@ -51,6 +58,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{patientId}")
+    @Operation(summary = "Delete Patient")
     public ResponseEntity<Void> deletePatient(@PathVariable UUID patientId) {
         patientService.delete(patientId);
         return ResponseEntity.noContent().build();
