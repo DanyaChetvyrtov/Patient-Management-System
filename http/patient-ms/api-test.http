@@ -17,3 +17,20 @@ Content-Type: application/json
   "address": "ул. Ленина, д. 21, кв. 5",
   "dateOfBirth": "2001-05-15"
 }
+
+### PUT create new patient
+@patientId=a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
+PUT {{ path }}/{{ patientId }}
+Content-Type: application/json
+
+{
+  "patientId": "{{patientId}}",
+  "name": "Семёнов Данил Олегович UPDATED",
+  "email": "danissimo3@example.com",
+  "address": "проспект Ленина, д. 21, кв. 5",
+  "dateOfBirth": "2001-09-04"
+}
+
+
+### DELETE delete patient by it's id
+DELETE {{ path }}/{{ patientId }}
