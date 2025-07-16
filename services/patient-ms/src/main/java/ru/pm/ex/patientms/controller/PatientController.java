@@ -47,8 +47,12 @@ public class PatientController {
     public ResponseEntity<PatientDto> updatePatient(@PathVariable("patientId") UUID patientId, @RequestBody @Validated(OnUpdate.class) PatientDto patientDto) {
         var patient = patientMapper.toEntity(patientDto);
         patient = patientService.update(patientId, patient);
-        return ResponseEntity
-                .created(URI.create("/patients/" + patient.getPatientId()))
-                .body(patientMapper.toDto(patient));
+        return ResponseEntity.ok().body(patientMapper.toDto(patient));
+    }
+
+    @DeleteMapping("/{patientId}")
+    public ResponseEntity<Void> deletePatient(@PathVariable UUID patientId) {
+        patientService.delete(patientId);
+        return ResponseEntity.noContent().build();
     }
 }

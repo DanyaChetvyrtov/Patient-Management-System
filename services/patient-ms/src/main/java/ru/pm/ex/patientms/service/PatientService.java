@@ -49,4 +49,8 @@ public class PatientService {
         return !dbPatientEmail.equals(requestPatientEmail) &&
                 patientRepository.existsByEmail(requestPatientEmail);
     }
+
+    public void delete(UUID patientId) {
+        patientRepository.deleteById(patientId);
+    }
 }
