@@ -1,9 +1,11 @@
 package ru.pm.ex.patientms.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.pm.ex.patientms.exception.exceptions.EmailAlreadyInUse;
 import ru.pm.ex.patientms.exception.exceptions.PatientNotFound;
+import ru.pm.ex.patientms.grpc.BillingServiceGrpcClient;
 import ru.pm.ex.patientms.model.Patient;
 import ru.pm.ex.patientms.repository.PatientRepository;
 
@@ -12,8 +14,10 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PatientService {
     private final PatientRepository patientRepository;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
     public List<Patient> getPatients() {
         return patientRepository.findAll();
@@ -28,13 +32,21 @@ public class PatientService {
         if (patientRepository.existsByEmail(patient.getEmail()))
             throw new EmailAlreadyInUse("Email " + patient.getEmail() + " is already in use");
 
-        return patientRepository.save(patient);
+        patient = patientRepository.save(patient);
+        billingServiceGrpcClient.createBillingAccount(
+                patient.getPatientId().toString(),
+                patient.getName(),
+                patient.getEmail()
+        );
+        log.info("Request has been sent");
+
+        return patient;
     }
 
     public Patient update(UUID patientId, Patient patient) {
         var dbPatient = getPatient(patientId);
 
-        if(updatedEmailInUse(dbPatient.getEmail(), patient.getEmail()))
+        if (updatedEmailInUse(dbPatient.getEmail(), patient.getEmail()))
             throw new EmailAlreadyInUse("Email " + patient.getEmail() + " is already in use");
 
         dbPatient.setName(patient.getName());
@@ -45,7 +57,7 @@ public class PatientService {
         return patientRepository.save(dbPatient);
     }
 
-    private boolean updatedEmailInUse(String dbPatientEmail, String requestPatientEmail){
+    private boolean updatedEmailInUse(String dbPatientEmail, String requestPatientEmail) {
         return !dbPatientEmail.equals(requestPatientEmail) &&
                 patientRepository.existsByEmail(requestPatientEmail);
     }
