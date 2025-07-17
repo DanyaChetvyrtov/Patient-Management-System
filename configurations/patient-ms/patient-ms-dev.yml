@@ -7,9 +7,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-  sql:
-    init:
-      mode: always
 
   kafka:
     bootstrap-servers: localhost:9094
