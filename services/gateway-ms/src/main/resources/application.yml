@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: gateway-ms
+
+server:
+  port: 4003
