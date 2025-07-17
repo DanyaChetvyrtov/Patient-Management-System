@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9094
+
+logging:
+  level:
+    ru.pm.ex.patientms: TRACE
