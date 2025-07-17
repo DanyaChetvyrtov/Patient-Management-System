@@ -64,6 +64,21 @@ services:
     networks:
       - bd-network
 
+  analytics-ms:
+    image: danilchet/analytics-ms
+    container_name: analytics-ms-container
+    ports:
+      - "4002:4002"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
+      - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
+    depends_on:
+      - config-ms
+      - kafka
+    networks:
+      - bd-network
+
   billing-ms:
     image: danilchet/billing-ms
     container_name: billing-ms-container
