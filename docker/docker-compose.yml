@@ -46,6 +46,22 @@ services:
     networks:
       - bd-network
 
+  billing-ms:
+    image: danilchet/billing-ms
+    container_name: billing-ms-container
+    ports:
+      - "4001:4001"
+      - "9001:9001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
+      - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
+    depends_on:
+      - config-ms
+    networks:
+      - bd-network
+
+
 volumes:
   postgres-bd:
 
