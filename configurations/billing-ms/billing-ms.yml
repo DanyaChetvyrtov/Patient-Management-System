@@ -1,2 +1,6 @@
 server:
   port: 4001
+
+grpc:
+  server:
+    port: 9001
