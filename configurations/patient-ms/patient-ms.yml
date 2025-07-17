@@ -2,6 +2,9 @@ server:
   port: 4000
 
 spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yml
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
