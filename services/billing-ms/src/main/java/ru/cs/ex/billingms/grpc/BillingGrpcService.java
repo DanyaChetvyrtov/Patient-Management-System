@@ -19,7 +19,7 @@ public class BillingGrpcService extends BillingServiceImplBase {
         // Business logic - e.g. save to database e.t.c
 
         var response = BillingResponse.newBuilder()
-                .setAccountId("22111")
+                .setAccountId(request.getPatientId())
                 .setStatus("ACTIVE")
                 .build();
 
