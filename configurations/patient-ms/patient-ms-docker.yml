@@ -7,3 +7,9 @@ spring:
   sql:
     init:
       mode: always
+
+billing:
+  service:
+    address: billing-ms
+    grps:
+      port: 9091
