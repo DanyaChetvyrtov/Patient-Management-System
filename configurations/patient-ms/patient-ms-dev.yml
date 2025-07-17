@@ -13,4 +13,4 @@ spring:
 
 logging:
   level:
-    ru.pm.ex.patientms: WARN
+    ru.pm.ex.patientms: TRACE
