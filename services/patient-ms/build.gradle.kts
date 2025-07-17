@@ -59,6 +59,9 @@ dependencies {
 	// docs
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
 
+	// liquibase
+	implementation("org.liquibase:liquibase-core")
+
 	// gRPC
 	implementation("io.grpc:grpc-stub:$grpcVersion")
 	implementation("io.grpc:grpc-protobuf:$grpcVersion")
