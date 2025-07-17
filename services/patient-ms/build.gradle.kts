@@ -67,6 +67,9 @@ dependencies {
 	implementation("net.devh:grpc-spring-boot-starter:3.1.0.RELEASE")
 	implementation("com.google.protobuf:protobuf-java:$protobufVersion")
 
+	// kafka
+	implementation("org.springframework.kafka:spring-kafka")
+
 	// lombok
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")

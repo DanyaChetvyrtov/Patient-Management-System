@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.pm.ex.patientms.exception.exceptions.EmailAlreadyInUse;
 import ru.pm.ex.patientms.exception.exceptions.PatientNotFound;
 import ru.pm.ex.patientms.grpc.BillingServiceGrpcClient;
+import ru.pm.ex.patientms.kafka.KafkaProducer;
 import ru.pm.ex.patientms.model.Patient;
 import ru.pm.ex.patientms.repository.PatientRepository;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class PatientService {
     private final PatientRepository patientRepository;
     private final BillingServiceGrpcClient billingServiceGrpcClient;
+    private final KafkaProducer kafkaProducer;
 
     public List<Patient> getPatients() {
         return patientRepository.findAll();
@@ -33,11 +35,14 @@ public class PatientService {
             throw new EmailAlreadyInUse("Email " + patient.getEmail() + " is already in use");
 
         patient = patientRepository.save(patient);
+
         billingServiceGrpcClient.createBillingAccount(
                 patient.getPatientId().toString(),
                 patient.getName(),
                 patient.getEmail()
         );
+        kafkaProducer.sendEvent(patient);
+
         log.info("Request has been sent");
 
         return patient;
