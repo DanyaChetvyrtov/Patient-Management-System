@@ -8,6 +8,9 @@ spring:
     init:
       mode: always
 
+  kafka:
+    bootstrap-servers: kafka:9092
+
 billing:
   service:
     address: billing-ms

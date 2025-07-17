@@ -11,6 +11,9 @@ spring:
     init:
       mode: always
 
+  kafka:
+    bootstrap-servers: localhost:9094
+
 logging:
   level:
     ru.pm.ex.patientms: TRACE
