@@ -1,0 +1,53 @@
+services:
+  patient-ms:
+    image: danilchet/patient-ms
+    container_name: patient-ms-container
+    ports:
+      - "4000:4000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
+      - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
+    networks:
+      - bd-network
+
+  analytics-ms:
+    image: danilchet/analytics-ms
+    container_name: analytics-ms-container
+    ports:
+      - "4002:4002"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
+      - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
+    networks:
+      - bd-network
+
+  billing-ms:
+    image: danilchet/billing-ms
+    container_name: billing-ms-container
+    ports:
+      - "4001:4001"
+      - "9001:9001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
+      - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
+    networks:
+      - bd-network
+
+  auth-ms:
+    image: danilchet/auth-ms
+    container_name: auth-ms-container
+    ports:
+      - "4004:4004"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
+      - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
+    networks:
+      - bd-network
+
+networks:
+  bd-network:
+    external: true
