@@ -21,7 +21,7 @@ fi
 # Создаём базы данных
 echo "PostgreSQL is ready. Creating databases..."
 
-psql -U "$POSTGRES_USER" -c "CREATE DATABASE patient_db;" || echo "Database 'account_db' already exists"
+psql -U "$POSTGRES_USER" -c "CREATE DATABASE $1;" || echo "Database '$1' already exists"
 
 # Запускаем PostgreSQL
 echo "Starting PostgreSQL server..."
