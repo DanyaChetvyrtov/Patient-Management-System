@@ -1,0 +1,9 @@
+#@path=http://localhost:9001
+GRPC localhost:9001/BillingService/CreateBillingAccount
+Content-Type: application/json
+
+{
+  "patientId": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+  "name": "Иванов Иван Иванович",
+  "email":  "ivanov@example.com"
+}

@@ -1,0 +1,36 @@
+@path=http://localhost:4003/api/patients
+
+### GET get patients
+GET {{ path }}
+
+### GET get patient by ID
+GET {{ path }}/696ed003-4aff-4cf5-b2a5-bc17b327e528
+
+
+### POST create new patient
+POST {{ path }}
+Content-Type: application/json
+
+{
+  "name": "Семёнов Данил Олегович",
+  "email": "danissimo124@example.com",
+  "address": "ул. Ленина, д. 21, кв. 5",
+  "dateOfBirth": "2001-05-15"
+}
+
+### PUT create new patient
+@patientId=696ed003-4aff-4cf5-b2a5-bc17b327e528
+PUT {{ path }}/{{ patientId }}
+Content-Type: application/json
+
+{
+  "patientId": "{{patientId}}",
+  "name": "Семёнов Данил Олегович UPDATED",
+  "email": "danissimo3@example.com",
+  "address": "проспект Ленина, д. 21, кв. 5",
+  "dateOfBirth": "2001-09-04"
+}
+
+
+### DELETE delete patient by it's id
+DELETE {{ path }}/{{ patientId }}
