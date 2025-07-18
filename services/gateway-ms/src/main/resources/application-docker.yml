@@ -7,21 +7,21 @@ spring:
         webflux:
           routes:
             - id: patient-ms-route
-              uri: http://localhost:4000
+              uri: http://patient-ms:4000
               predicates:
                 - Path=/api/patients/**
               filters:
                 - StripPrefix=1
 
             - id: patient-ms-api-docs-route
-              uri: http://localhost:4000
+              uri: http://patient-ms:4000
               predicates:
                 - Path=/patient/v3/**
               filters:
                 - RewritePath=/patient/v3/(?<path>.*), /v3/$\{path}
 
             - id: patient-ms-swagger-route
-              uri: http://localhost:4000
+              uri: http://patient-ms:4000
               predicates:
                 - Path=/swagger/patients/**
               filters:
