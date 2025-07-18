@@ -1,7 +1,7 @@
 services:
-  postgres:
+  postgres-patient:
     image: postgres:16-alpine
-    container_name: postgres-bd-container
+    container_name: postgres-patient-bd-container
     ports:
       - "5432:5432"
     environment:
@@ -12,6 +12,22 @@ services:
       - bd-network
     volumes:
       - postgres-bd:/data/postgres
+      - ../scripts/db-initializer.sh:/usr/local/bin/db-initializer.sh
+    restart: unless-stopped
+
+  postgres-auth:
+    image: postgres:16-alpine
+    container_name: postgres-auth-bd-container
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      PGDATA: /data/postgres
+    networks:
+      - bd-network
+    volumes:
+      - postgres-bd-auth:/data/postgres
       - ../scripts/db-initializer.sh:/usr/local/bin/db-initializer.sh
     restart: unless-stopped
 
@@ -58,7 +74,7 @@ services:
       - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
       - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
     depends_on:
-      - postgres
+      - postgres-patient
       - config-ms
       - kafka
     networks:
@@ -104,9 +120,25 @@ services:
     networks:
       - bd-network
 
+  auth-ms:
+    image: danilchet/auth-ms
+    container_name: auth-ms-container
+    ports:
+      - "4004:4004"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONFIG_URI=http://config-ms:8888
+      - SPRING_CONFIG_IMPORT=configserver:http://config-ms:8888
+    depends_on:
+      - postgres-auth
+      - config-ms
+    networks:
+      - bd-network
+
 
 volumes:
   postgres-bd:
+  postgres-bd-auth:
 
 networks:
   bd-network:
