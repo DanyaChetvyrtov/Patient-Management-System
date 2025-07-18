@@ -94,6 +94,16 @@ services:
     networks:
       - bd-network
 
+  gateway-ms:
+    image: danilchet/gateway-ms
+    container_name: gateway-ms-container
+    ports:
+      - "4003:4003"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - bd-network
+
 
 volumes:
   postgres-bd:
