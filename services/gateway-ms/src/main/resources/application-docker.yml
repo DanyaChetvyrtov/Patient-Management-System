@@ -27,5 +27,12 @@ spring:
               filters:
                 - RewritePath=/swagger/patients/(?<path>.*), /swagger-ui/$\{path}
 
+            - id: auth-ms-route
+              uri: http://auth-ms:4004
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - StripPrefix=1
+
 server:
   port: 4003
