@@ -1,0 +1,32 @@
+@path = http://localhost:4004/auth
+
+### POST register new user
+POST {{ path }}/register
+Content-Type: application/json
+
+{
+  "email": "danil2@gmail.com",
+  "password": "root12345"
+}
+
+### POST login user
+POST {{ path }}/login
+Content-Type: application/json
+
+{
+  "email": "danil2@gmail.com",
+  "password": "root12345"
+}
+
+### POST login user
+POST {{ path }}/login
+Content-Type: application/json
+
+{
+  "email": "danil2@gmail.com",
+  "password": "root12345"
+}
+### GET login user
+GET {{ path }}/validate
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pbDJAZ21haWwuY29tIiwicm9sZXMiOiJBRE1JTiIsImV4cCI6MTc1MjkxODIzM30.N7BEelBEfjby-4wkRcI9OWH_lxIvcsFPaFEns884Z03ykxsWRvXqCIK2WybhwIbQ

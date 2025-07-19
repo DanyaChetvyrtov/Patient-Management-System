@@ -1,0 +1,26 @@
+@path = http://localhost:4003/api/auth
+
+### POST register new user
+POST {{ path }}/register
+Content-Type: application/json
+
+{
+  "email": "danil4@gmail.com",
+  "password": "root12345"
+}
+
+### POST login user
+POST {{ path }}/login
+Content-Type: application/json
+
+{
+  "email": "danil4@gmail.com",
+  "password": "root12345"
+}
+
+> {% client.global.set("token", response.body.accessToken) %}
+
+### GET login user
+GET {{ path }}/validate
+Content-Type: application/json
+Authorization: Bearer {{ token }}
