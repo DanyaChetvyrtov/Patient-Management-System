@@ -12,6 +12,10 @@ import ru.cs.ex.authms.repository.UserRepository;
 public class UserService {
     private final UserRepository userRepository;
 
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
     public User findByEmail(String email) throws UsernameNotFoundException {
         var user = userRepository.findByEmail(email);
 

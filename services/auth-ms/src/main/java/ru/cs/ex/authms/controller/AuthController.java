@@ -18,6 +18,12 @@ import java.util.Optional;
 public class AuthController {
     private final AuthService authService;
 
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@RequestBody @Validated LoginRequestDto loginRequestDto) {
+        authService.create(loginRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
     @Operation(summary = "Generate token on user login")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Validated LoginRequestDto loginRequestDto) {
