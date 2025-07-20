@@ -1,4 +1,4 @@
-package ru.cs.ex.authms.dto;
+package ru.cs.ex.authms.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
