@@ -12,6 +12,7 @@ spring:
                 - Path=/api/patients/**
               filters:
                 - StripPrefix=1
+                - JwtValidation
 
             - id: patient-ms-api-docs-route
               uri: http://patient-ms:4000
@@ -36,3 +37,7 @@ spring:
 
 server:
   port: 4003
+
+auth:
+  service:
+    url: http://auth-ms:4004

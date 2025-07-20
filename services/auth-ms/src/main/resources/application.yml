@@ -7,3 +7,6 @@ spring:
       fail-fast: true
   config:
     import: "configserver:"
+
+jwt:
+  secret: "U0FVLUJSQVQyMjgtaXQnc1N1cGVyJGVDcmVUS0tLS0tleQ=="
